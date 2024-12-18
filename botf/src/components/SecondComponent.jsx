@@ -33,7 +33,7 @@ const SecondComponent = () => {
     video: "",
     propertyType: "",
     residencyType: "",
-    pussy:"",
+    position:"",
     discount: null,
     area: "",
     type: "",
@@ -698,13 +698,13 @@ const SecondComponent = () => {
                   <label className="flex items-center">
                     <input
                       type="radio"
-                      name="pussy"
+                      name="position"
                       value="agent"
-                      checked={secondFormData.pussy === "agent"}
+                      checked={secondFormData.position === "agent"}
                       onChange={(e) =>
                         setSecondFormData({
                           ...secondFormData,
-                          pussy: e.target.value,
+                          position: e.target.value,
                         })
                       }
                       className="mr-2"
@@ -714,13 +714,13 @@ const SecondComponent = () => {
                   <label className="flex items-center">
                     <input
                       type="radio"
-                      name="pussy"
+                      name="position"
                       value="owner"
-                      checked={secondFormData.pussy === "owner"}
+                      checked={secondFormData.position === "owner"}
                       onChange={(e) =>
                         setSecondFormData({
                           ...secondFormData,
-                          pussy: e.target.value,
+                          position: e.target.value,
                         })
                       }
                       className="mr-2"
