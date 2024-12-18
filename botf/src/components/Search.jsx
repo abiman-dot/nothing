@@ -285,7 +285,7 @@ function Search() {
       {/* Filter Popup */}
 
       {isFilterPopupOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 mb-24">
           <div className="bg-white w-full max-w-md p-4 rounded-lg shadow-lg max-h-screen overflow-y-auto">
             <h2 className="text-lg font-bold mb-3 text-gray-800">Filters</h2>
 
