@@ -20,9 +20,9 @@ import PropertyDetails from "./components/PropertyDetails";
 
 const App = () => {
   const queryClient = new QueryClient();
-  // const role = localStorage.getItem("role");
+  const role = localStorage.getItem("role");
 
-  const role = "user"
+  
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
