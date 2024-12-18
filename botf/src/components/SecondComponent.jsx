@@ -62,9 +62,10 @@ const SecondComponent = () => {
       secondFormData.video = secondFormData.video[0] || ""; // Take the first video URL or set as empty string
     }
     try {
-      console.log(secondFormData.video,"3333333333333333333333333333333333333333")
+     
+      console.log(secondFormData,"3333333333333333333333333333333333333333")
        const res = await axios.post(
-        "https://add-bot-server.vercel.app/api/residency/create",
+        "https://nothing-server.vercel.app/api/residency/create",
         {
           teleNumber,
            secondFormData,
