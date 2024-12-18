@@ -23,7 +23,7 @@ const UploadImage = ({ onImageUpdate }) => {
               maxFileSize: 10000000,
               allowedFormats: ["jpg", "png", "jpeg"],
             },
-            (err, result) => {
+            (err, result) => { 
               if (result.event === "success") {
                 setImageURLs((prev) => {
                   const updatedImages = [...prev, result.info.secure_url];
