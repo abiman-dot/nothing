@@ -13,7 +13,7 @@ function Home() {
   const [isMapView, setIsMapView] = useState(false); // Toggle between List and Map view
   const [favorites, setFavorites] = useState([]); // Track favorite properties
   const navigate = useNavigate();
-  const [ setUserDetails] = useState({});
+  const [userdetails, setUserDetails] = useState({});
 
   // Fetch URL parameters and store in localStorage
   useEffect(() => {
