@@ -18,7 +18,7 @@ const UploadVideo = ({ onVideoUpdate }) => {
           widgetRef.current = cloudinary.createUploadWidget(
             {
               cloudName: "dbandd0k7",
-              uploadPreset: "xmmcvp1e", // Video upload preset
+              uploadPreset: "xmmcvp1e",  
               resourceType: "video", // Allow videos only
               multiple: false, // Allow multiple video uploads
               maxFileSize: 30000000, // 30MB per file
