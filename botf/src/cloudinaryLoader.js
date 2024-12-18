@@ -1,5 +1,4 @@
-// cloudinaryLoader.js
-export const loadCloudinaryScript = () => {
+ export const loadCloudinaryScript = () => {
     return new Promise((resolve, reject) => {
       if (document.getElementById("cloudinary-script")) {
         // Cloudinary script already loaded
