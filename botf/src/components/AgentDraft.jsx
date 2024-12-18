@@ -47,7 +47,7 @@ console.log("bbbbbbbbbbbbbbbbb")
       }
 
       // Update status in the backend
-      await axios.post(`https://add-bot-server.vercel.app/api/residency/publish/${id}`);
+      await axios.post(`https://nothing-server.vercel.app/api/residency/publish/${id}`);
 
       // Google Sheets Integration
       const googleSheetUrl =
