@@ -73,7 +73,7 @@ export const createResidency = asyncHandler(async (req, res) => {
         parking,
         city,
         position,
-        deposit,
+        deposit: parseInt(deposit),
        email,
         addressURL,
         balcony,
