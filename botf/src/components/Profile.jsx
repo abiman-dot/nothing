@@ -6,15 +6,14 @@ import UseAll from "../hooks/useall";
 import axios from "axios";
 
 const Profile = () => {
-  const teleNumber = "999" 
-  const role = "user"
-  // const teleNumber = localStorage.getItem("teleNumber") || null;  
-  // const role = localStorage.getItem("role");  
-   const navigate = useNavigate();
+
+  const teleNumber = localStorage.getItem("teleNumber") || null;  
+  const role = localStorage.getItem("role");  
+  const navigate = useNavigate();
   const { data, isLoading, error } = UseAll();
   const [filterStatus, setFilterStatus] = useState("published");
   const [email, setEmail] = useState("");
-const userId = localStorage.getItem("userId")
+  const userId = localStorage.getItem("userId")
   // Logout handler
   const handleLogout = () => {
     localStorage.clear();
@@ -33,7 +32,7 @@ const userId = localStorage.getItem("userId")
     if (email) {
       try{
  
-        await axios.put("https://add-bot-server.vercel.app/api/user/updateuser",{
+        await axios.put("https://nothing-server.vercel.app/api/user/updateuser",{
            email,
            userId
            
