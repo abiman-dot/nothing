@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma.js";
 
 
 export const createUser = asyncHandler(async (req, res) => {
-  const { username, teleNumber, surname, email } = req.body;
+  const { username, teleNumber, surname } = req.body;
 
   try {
     // Check if user already exists
@@ -46,9 +46,8 @@ export const createUser = asyncHandler(async (req, res) => {
       data: {
         username,
         surname,
-        teleNumber,
-        email: email || null, // Set email if provided
-      },
+        teleNumber
+       },
     });
 
   
