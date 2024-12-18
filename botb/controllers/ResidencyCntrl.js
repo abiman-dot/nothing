@@ -299,6 +299,8 @@ export const updateResidency = asyncHandler(async (req, res) => {
       where: { id: id },
       data: {
         title: data.title,
+        price: data.price,
+        discount: data.discount
 
 
 
