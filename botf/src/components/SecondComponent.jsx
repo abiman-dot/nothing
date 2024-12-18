@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import UploadImage from "./UploadImage";
-import UploadVideo from "../../UploadVideo";
+import UploadVideo from "./UploadVideo";
  import Confetti from "react-confetti"; // Ensure you have this installed
  
 const SecondComponent = () => {
