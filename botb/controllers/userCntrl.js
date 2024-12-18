@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma.js";
 
 
 export const createUser = asyncHandler(async (req, res) => {
-  let { username, teleNumber, surname } = req.body;
+  const { username, teleNumber, surname, email } = req.body;
 
   try {
     // Check if user already exists
@@ -13,75 +13,61 @@ export const createUser = asyncHandler(async (req, res) => {
       where: { teleNumber },
     });
 
-
-   
-
+    // If user exists, check for roles and return response
     if (userExists) {
-      if (userExists.email) {
-        const isAgent = userExists.email.includes("geomap");
-
-       
-
-        if (isAgent) {
-          return res.status(200).json({
-            message: "Agent",
-           email:userExists.email,
-            agent: userExists,
-          });
-        }
+      const email = userExists.email || "";
+      
+      if (email.includes("geomap")) {
+        return res.status(200).json({
+          message: "Agent",
+  email:userExists.email,
+         user: userExists,
+        });
       }
- if (userExists.email.includes("david")) {
-          return res.status(200).json({
-            message: "Admin",
-           email:userExists.email,
-            admin: userExists,
-          });
-        }
+
+      if (email.includes("david")) {
+        return res.status(200).json({
+          message: "Admin",
+  email:userExists.email,
+         user: userExists,
+        });
+      }
+
+      // Default response if no role matched
       return res.status(200).json({
         message: "Logged in successfully",
+        role: "User",
         user: userExists,
       });
     }
 
-   
-
-    // If user doesn't exist, create a new user
+    // If user does not exist, create a new user
     const newUser = await prisma.user.create({
       data: {
-        username: username,
-        surname: surname,
-        teleNumber: teleNumber,
+        username,
+        surname,
+        teleNumber,
+        email: email || null, // Set email if provided
       },
     });
 
-    // Check for admin logic
-    if (teleNumber.includes("david")) {
-      return res.status(201).json({
-        message: "Admin",
-        admin: newUser,
-      });
-    }
+  
 
-    // Check for agent logic
-    const isAgent = teleNumber.includes("geomap");
-    if (isAgent) {
-      return res.status(201).json({
-        message: "Agent",
-        agent: newUser,
-      });
-    }
-
-    // Default response for new user
+    // Default response for a new standard user
     return res.status(201).json({
       message: "User registered successfully",
+      role: "User",
       user: newUser,
     });
-
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "An error occurred" });
+    console.error("Error creating user:", err.message);
+    return res.status(500).json({
+      message: "An error occurred while creating the user",
+      error: err.message,
+    });
   }
 });
+
 
 
  
