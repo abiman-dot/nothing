@@ -27,6 +27,8 @@ export const createResidency = asyncHandler(async (req, res) => {
     totalFloors,
     balcony,
     amenities,
+    position,
+    deposit,
     description,
     video,
     images, // Ensure this is an array
@@ -70,6 +72,8 @@ export const createResidency = asyncHandler(async (req, res) => {
         type,
         parking,
         city,
+        position,
+        deposit,
        email,
         addressURL,
         balcony,
