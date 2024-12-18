@@ -42,7 +42,8 @@ model Residency {
   residencyType String?
   city          String?
   price         Int?
-  pussy         String?
+  position      String?
+  deposit       Int?
   discount      Float?
   commission    Float?
   rooms         Int?
