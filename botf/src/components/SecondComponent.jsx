@@ -25,7 +25,7 @@ const SecondComponent = () => {
     price: null,
     currency: "USD",
     commission: null,
-    deposit: "",
+    deposit: null,
     paymentMethod: "FirstDeposit",
     metro: [],
     district: [],
@@ -775,7 +775,7 @@ const SecondComponent = () => {
                   onChange={(e) =>
                     setSecondFormData({
                       ...secondFormData,
-                      deposit: e.target.value,
+                      deposit: Number(e.target.value),
                     })
                   }
                   className="w-full p-2 border border-gray-300 rounded-md"
