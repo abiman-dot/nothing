@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-    baseURL: "https://add-bot-server.vercel.app/api", // Use HTTP for local development
+    baseURL: "https://nothing-server.vercel.app/api", // Use HTTP for local development
   });
   
 
@@ -71,9 +71,8 @@ export const getProperty = async (id) => {
 };
 
 export const getAllLikes = async () => {
-  // const email = localStorage.getItem("teleNumber")
-  const email = "123456"
-
+  const email = localStorage.getItem("teleNumber")
+ 
    try {
     const res = await api.post(
       `/user/allLikes`,
