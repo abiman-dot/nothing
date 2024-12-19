@@ -112,7 +112,10 @@ function Home() {
     }
   };
   
-
+  const Write = (property) => {
+    console.log("Property ID:", property.id);
+    console.log("Property Details:", property);
+  };
   if (isLoading) return <p className="text-gray-600 text-center">Loading properties...</p>;
   if (error) return <p className="text-red-500 text-center">Error fetching properties.</p>;
 
@@ -150,6 +153,14 @@ function Home() {
                   <h3 className="text-lg font-semibold">{property.title || "Untitled Property"}</h3>
                   <p>Price: {property.price || "N/A"}</p>
                 </div>
+                <div>
+                <button
+    className="px-6 py-2 bg-gradient-to-r ml-5 mb-4 from-blue-500 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition duration-200"
+    onClick={() => Write(property)} // Pass the property details to the Write function
+  >
+    Write
+  </button>
+                  </div>
                 <div
                   className="absolute bottom-4 right-4 cursor-pointer"
                   onClick={(e) => {
