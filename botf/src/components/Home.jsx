@@ -112,19 +112,12 @@ function Home() {
     }
   };
   
- const Write = async(property) => {
+ const Write =   (property) => {
     const teleNumber = localStorage.getItem("teleNumber")
     console.log("Property ID:", property.id);
     console.log("Property Details:", property);
 
-    try{
-
-      await axios.post(`https://nothing-server.vercel.app/api/user/addInterest/${property.id}`,{
-        teleNumber
-      })
-    }catch(err){
-      console.log(err)
-    }
+  
 
 
   };
