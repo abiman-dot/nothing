@@ -319,22 +319,25 @@ export const removeInterest = asyncHandler(async (req, res) => {
 
 
 export const rentedbyagent = asyncHandler(async (req, res) => {
-  let {id, username,residency, teleNumber, codastral, startDate, endDate } = req.body;
+  const { username, residency, telephoneNumber, codastral, startDate, endDate } = req.body;
+  const { id } = req.params;
+
   try {
     const newCustomer = await prisma.customer.create({
       data: {
-        id,
-        residency,
+        id, // Residency ID or property ID
+        residency, // Property title sent from the frontend
         username,
-        telephoneNumber : teleNumber,
+        telephoneNumber,
         codastral,
         startDate,
-        endDate
+        endDate,
       },
     });
 
-    console.log('Customer created:', newCustomer);
+    res.status(201).json(newCustomer);
   } catch (error) {
-    console.error('Error creating customer:', error);
+    console.error("Error creating customer:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
