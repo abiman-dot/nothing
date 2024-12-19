@@ -195,3 +195,92 @@ export const updateUserEmail = async ( req,res) => {
    
   }
 };
+
+
+
+export const interest = asyncHandler(async (req, res) => {
+  const { teleNumber } = req.body;
+  const { id } = req.params;
+  try {
+    const alreadyInterested = await prisma.user.findUnique({
+      where: { teleNumber: teleNumber },
+      select: { interested: true },
+    });
+
+
+    if (!alreadyInterested) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+
+    if (alreadyInterested.interested.some((interest) => interest.id === id)) {
+      return res.status(400).json({ message: "Already liked" });
+    }
+    await prisma.user.update({
+      where: { teleNumber: teleNumber },
+      data: {
+        interested: { push: id },
+      },
+    });
+
+    res.json({ message: "interest updated successfully"});
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to interest" });
+  }
+});
+export const removeInterest = asyncHandler(async (req, res) => {
+  const { teleNumber } = req.body;
+  const { id } = req.params;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { teleNumber: teleNumber },
+      select: { interested: true },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!user.interested.includes(id)) {
+      return res.status(400).json({ message: "Removed interest" });
+    }
+    const updatedInterest = user.interested.filter((id) => id !== id);
+    
+
+    await prisma.user.update({
+      where: { teleNumber: teleNumber },
+      data: { interested: updatedInterest },
+    });
+
+    res.json({ message: "removed Interest successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to remove interest" });
+  }
+});
+
+
+export const rentedbyagent = asyncHandler(async (req, res) => {
+  let {id, username,residency, teleNumber, codastral, startDate, endDate } = req.body;
+  try {
+    const newCustomer = await prisma.customer.create({
+      data: {
+        id,
+        residency,
+        username,
+        telephoneNumber : teleNumber,
+        codastral,
+        startDate,
+        endDate
+      },
+    });
+
+    console.log('Customer created:', newCustomer);
+  } catch (error) {
+    console.error('Error creating customer:', error);
+  }
+});
