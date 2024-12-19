@@ -13,6 +13,8 @@ export const createResidency = asyncHandler(async (req, res) => {
     propertyType,
     selectedAdditional,
     residencyType,
+        googleaddressurl,
+
     termDuration,
     term,
     rooms,
@@ -77,6 +79,8 @@ export const createResidency = asyncHandler(async (req, res) => {
        email,
         addressURL,
         balcony,
+            googleaddressurl,
+
         amenities,
         description,
         video,
