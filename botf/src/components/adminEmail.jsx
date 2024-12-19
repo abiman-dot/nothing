@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 
 const AdminEmail = () => {
-  const email = "david@gmail.com" // Retrieve email from localStorage
-
+  
+   const email = localStorage.getItem("email");
+  const name = localStorage.getItem("firstName");
   const { data, isLoading, error } = useProperties();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear(); // Clear all localStorage data
+    localStorage.clear();  
     navigate("/");
     window.location.reload();
   };
@@ -40,7 +41,7 @@ const AdminEmail = () => {
         <div className="relative flex justify-center items-center">
           <FaUserCircle className="text-blue-500 w-24 h-24" />
         </div>
-        <p className="mt-4 text-xl font-bold text-gray-700">{email}</p>
+        <p className="mt-4 text-xl font-bold text-gray-700">{name}</p>
         <p className="text-sm text-gray-500">Welcome back, Admin!</p>
         <button
           onClick={handleLogout}
