@@ -2,6 +2,8 @@ import asyncHandler from "express-async-handler";
 import { prisma } from "../lib/prisma.js";
 
 export const createResidency = asyncHandler(async (req, res) => {
+  console.log(req.body.secondFormData)
+
   const {
     title,
     address,
@@ -9,12 +11,11 @@ export const createResidency = asyncHandler(async (req, res) => {
     district,
     price,
     discount,
+    currency,
     commission,
     propertyType,
     selectedAdditional,
     residencyType,
-        googleaddressurl,
-
     termDuration,
     term,
     rooms,
@@ -25,6 +26,8 @@ export const createResidency = asyncHandler(async (req, res) => {
     type,
     parking,
     bathrooms,
+    paymentMethod,
+    googleaddressurl,
     floor,
     totalFloors,
     balcony,
@@ -35,6 +38,7 @@ export const createResidency = asyncHandler(async (req, res) => {
     video,
     images, // Ensure this is an array
   } = req.body.secondFormData;
+
 
   const userTeleNumber = req.body.teleNumber;
   const email = req.body.email;
@@ -61,6 +65,8 @@ export const createResidency = asyncHandler(async (req, res) => {
         selectedAdditional,
         discount,
         commission,
+        paymentMethod,
+        currency,
         propertyType,
         residencyType,
         heating,
@@ -78,9 +84,8 @@ export const createResidency = asyncHandler(async (req, res) => {
         deposit: parseInt(deposit),
        email,
         addressURL,
+        googleaddressurl,
         balcony,
-            googleaddressurl,
-
         amenities,
         description,
         video,
@@ -303,9 +308,6 @@ export const updateResidency = asyncHandler(async (req, res) => {
       where: { id: id },
       data: {
         title: data.title,
-        price: data.price !== null ? Number(data.price) : null,
-        discount: data.discount !== null ? Number(data.discount) : null,
-     
 
 
 
