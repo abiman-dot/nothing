@@ -9,6 +9,7 @@ const Profile = () => {
 
   const teleNumber = localStorage.getItem("teleNumber") || null;  
   const role = localStorage.getItem("role");  
+  const name = localStorage.getItem("firstName");
   const navigate = useNavigate();
   const { data, isLoading, error } = UseAll();
   const [filterStatus, setFilterStatus] = useState("published");
@@ -92,8 +93,8 @@ console.log(err)
       {/* User Profile Section */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-center relative">
         <FaUserCircle className="text-blue-500 w-24 h-24 mx-auto" />
-        <p className="mt-4 text-xl font-bold text-gray-700">{teleNumber}</p>
-        <p className="text-sm text-gray-500">Welcome back! Here is your dashboard.</p>
+        <p className="mt-4 text-xl font-bold text-gray-700">{name}</p>
+        <p className="text-sm text-gray-500">Welcome back! {role} Here is your dashboard.</p>
         <button
           onClick={handleLogout}
           className="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
