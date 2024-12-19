@@ -25,7 +25,7 @@ function Dashboard() {
       try {
         // Fetch all users
         const users = await getAllUsers();
-        const emails = users.map((user) => user.teleNumber || "Unknown");
+        const emails = users.map((user) => user.email || "Unknown");
         setUserEmails(emails);
 
         // Aggregate user roles
