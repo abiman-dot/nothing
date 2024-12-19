@@ -9,7 +9,32 @@ function AgentDraftDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadingActionId, setLoadingActionId] = useState(null); // Track processing ID
+ const [filteredDrafts, setFilteredDrafts] = useState([]); // Filtered drafts
+  const [filterDate, setFilterDate] = useState(""); // Filter date
+  const [filterEmail, setFilterEmail] = useState(""); // Filter email
+ const applyFilters = () => {
+    let updatedDrafts = [...drafts];
 
+    if (filterDate) {
+      updatedDrafts = updatedDrafts.filter((draft) =>
+        new Date(draft.updatedAt).toISOString().split("T")[0] === filterDate
+      );
+    }
+
+    if (filterEmail) {
+      updatedDrafts = updatedDrafts.filter((draft) =>
+        draft.email?.toLowerCase().includes(filterEmail.toLowerCase())
+      );
+    }
+
+    setFilteredDrafts(updatedDrafts);
+  };
+
+  const clearFilters = () => {
+    setFilterDate("");
+    setFilterEmail("");
+    setFilteredDrafts(drafts);
+  };
   useEffect(() => {
     const fetchDrafts = async () => {
       try {
@@ -185,7 +210,7 @@ console.log("bbbbbbbbbbbbbbbbb")
       #${selectedDraft?.city} #${selectedDraft?.district} 🏢#${selectedDraft?.metro}
 📍[${selectedDraft.address}](${selectedDraft.googleaddressurl})
         
-#${selectedDraft?.title} Apartment near 
+#${selectedDraft?.title} 
 Apartment for #${selectedDraft?.type}✨ #${selectedDraft?.residencyType}
         
 🏠 ${selectedDraft.area} Sq.m | #${selectedDraft?.floor}floor | #${selectedDraft?.bathrooms}Bath
@@ -285,9 +310,51 @@ ${selectedDraft.parking === 0 ? "❌ Parking" : ""}
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 p-4 mb-6">
       <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Drafts</h1>
-      {drafts.length > 0 ? (
+
+      <div className="bg-white p-4 rounded-lg shadow-lg mb-6">
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">Filter Drafts</h2>
+        <div className="flex flex-wrap gap-4 items-center">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Filter by Date</label>
+            <input
+              type="date"
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)}
+              className="mt-1 block w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Filter by Email</label>
+            <input
+              type="email"
+              value={filterEmail}
+              onChange={(e) => setFilterEmail(e.target.value)}
+              placeholder="Enter email"
+              className="mt-1 block w-full px-4 py-2 border rounded focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            onClick={applyFilters}
+            className="mt-6 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
+          >
+            Apply Filters
+          </button>
+          <button
+            onClick={clearFilters}
+            className="mt-6 bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition"
+          >
+            Clear Filters
+          </button>
+        </div>
+      </div>
+
+
+
+
+      
+      {filteredDrafts.length > 0 ? (
         <div className="space-y-4">
-          {drafts.map((draft) => (
+          {filteredDrafts.map((draft) => (
             <div
 
               key={draft.id}
