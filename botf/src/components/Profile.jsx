@@ -15,7 +15,7 @@ const Profile = () => {
   const { data, isLoading, error } = UseAll();
   const [filterStatus, setFilterStatus] = useState("published");
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const userId = localStorage.getItem("userId");
   const [showUpdateForm, setShowUpdateForm] = useState(false); // Toggle form visibility
@@ -34,6 +34,9 @@ const Profile = () => {
           setLastName(matchedUser.surname || "");
           setEmail(matchedUser.email || "");
         }
+        localStorage.setItem("firstName")
+        localStorage.setItem("lastName")
+        localStorage.setItem("email")
       } catch (error) {
         console.error("Error fetching users:", error);
       }
