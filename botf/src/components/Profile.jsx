@@ -33,10 +33,11 @@ const Profile = () => {
           setFirstName(matchedUser.username || "");
           setLastName(matchedUser.surname || "");
           setEmail(matchedUser.email || "");
+            localStorage.setItem("firstName",matchedUser.username)
+          localStorage.setItem("lastName",matchedUser.surname)
+          localStorage.setItem("email",matchedUser.email)
         }
-        localStorage.setItem("firstName")
-        localStorage.setItem("lastName")
-        localStorage.setItem("email")
+       
       } catch (error) {
         console.error("Error fetching users:", error);
       }
