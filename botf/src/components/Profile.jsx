@@ -4,7 +4,7 @@ import { useState,useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import UseAll from "../hooks/useall";
 import axios from "axios";
-import getAllUsers from "../hooks/useall"; // Assuming this is the hook to fetch all users
+import getAllUsers from "../api/getAllUsers"; // Assuming this is the hook to fetch all users
 
 const Profile = () => {
   // const teleNumber = "1219674630";
