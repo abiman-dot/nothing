@@ -132,10 +132,8 @@ function Home() {
       {/* Content Section */}
       <div className="bg-white p-6 rounded-lg shadow-lg">
         {isMapView ? (
-          <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
-            <Map />
-          </LoadScript>
-        ) : (
+                 <Map />  
+         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             {data?.map((property) => (
               <div
