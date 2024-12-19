@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import UseAll from "../hooks/useall";
 import axios from "axios";
+import getAllUsers from "../hooks/useall"; // Assuming this is the hook to fetch all users
 
 const Profile = () => {
-  // const teleNumber = "6577307207";
-  // const role = "user";  
-
-  const teleNumber = localStorage.getItem("teleNumber")
+  // const teleNumber = "1219674630";
+  // const role = "agent";  
+   const teleNumber = localStorage.getItem("teleNumber")
   const role = localStorage.getItem("role")
-
+const name = "Geomap User"
    const navigate = useNavigate();
   const { data, isLoading, error } = UseAll();
   const [filterStatus, setFilterStatus] = useState("published");
@@ -25,6 +25,25 @@ const Profile = () => {
   const toggleUpdateForm = () => {
     setShowUpdateForm((prev) => !prev);
   };
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const users = await getAllUsers(); // Fetch all users
+        const matchedUser = users.find((user) => user.teleNumber === teleNumber);
+        if (matchedUser) {
+          setFirstName(matchedUser.firstName || "");
+          setLastName(matchedUser.lastName || "");
+          setEmail(matchedUser.email || "");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    if (teleNumber) {
+      fetchUserDetails();
+    }
+  }, [teleNumber]);
 
   // Handle profile updates
   const handleProfileUpdate = async () => {
@@ -86,6 +105,7 @@ const Profile = () => {
           property.status === filterStatus
       )
     : [];
+  
 
   if (!teleNumber) {
     return (
@@ -123,7 +143,7 @@ const Profile = () => {
       {/* User Profile Section */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-center relative">
         <FaUserCircle className="text-blue-500 w-24 h-24 mx-auto" />
-        <p className="mt-4 text-xl font-bold text-gray-700">{firstName}</p>
+        <p className="mt-4 text-xl font-bold text-gray-700">{firstName || name}</p>
         <p className="text-sm text-gray-500">Welcome back! {role} Here is your dashboard.</p>
         <button
           onClick={toggleUpdateForm}
@@ -139,7 +159,7 @@ const Profile = () => {
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <h2 className="text-xl font-bold text-gray-700 mb-4 border-b pb-2">Update Profile</h2>
           <div className="space-y-4">
-            <input
+          <input
               type="text"
               placeholder="First Name"
               value={firstName}
@@ -173,7 +193,7 @@ const Profile = () => {
       )}
 
       {/* Filter Buttons for Agents */}
-      {role === "agent" && (
+      {role === "agent" ? (
         <div className="flex justify-center space-x-4 mb-4">
           <button
             onClick={() => handleStatusClick("published")}
@@ -196,9 +216,9 @@ const Profile = () => {
             Rented
           </button>
           <button
-            onClick={() => handleStatusClick("archived")}
+            onClick={() => handleStatusClick("archieve")}
             className={`px-4 py-2 rounded shadow ${
-              filterStatus === "archived"
+              filterStatus === "archieve"
                 ? "bg-red-500 text-white"
                 : "bg-gray-200 text-gray-700"
             } hover:bg-red-400 transition`}
@@ -206,7 +226,34 @@ const Profile = () => {
             Archived
           </button>
         </div>
-      )}
+      )
+     :(
+// USer
+      <div className="flex justify-center space-x-4 mb-4">
+      <button
+        onClick={() => handleStatusClick("draft")}
+        className={`px-4 py-2 rounded shadow ${
+          filterStatus === "draft" 
+            ? "bg-blue-500 text-white"
+            : "bg-gray-200 text-gray-700"
+        } hover:bg-blue-400 transition`}
+      >
+        Creation
+      </button>
+       
+      <button
+        onClick={() => handleStatusClick()}
+        className={`px-4 py-2 rounded shadow ${
+          filterStatus === ""
+            ? "bg-red-500 text-white"
+            : "bg-gray-200 text-gray-700"
+        } hover:bg-red-400 transition`}
+      >
+        History
+      </button>
+    </div>
+     )
+    }
 
       {/* Properties Section */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
