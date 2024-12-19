@@ -112,14 +112,9 @@ function Home() {
     }
   };
   
- const Write =   (property) => {
-    const teleNumber = localStorage.getItem("teleNumber")
+  const Write = (property) => {
     console.log("Property ID:", property.id);
     console.log("Property Details:", property);
-
-  
-
-
   };
   if (isLoading) return <p className="text-gray-600 text-center">Loading properties...</p>;
   if (error) return <p className="text-red-500 text-center">Error fetching properties.</p>;
