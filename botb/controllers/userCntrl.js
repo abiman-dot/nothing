@@ -157,7 +157,7 @@ export const allLikes = asyncHandler(async (req, res) => {
   const { email } = req.body;
   try {
     const likes = await prisma.user.findUnique({
-      where: { email: email },
+      where: { teleNumber: email },
       select: { favoriteResidency: true },
     });
     res.status(200).json(likes.favoriteResidency);
