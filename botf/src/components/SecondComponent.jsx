@@ -45,11 +45,8 @@ const SecondComponent = ({ onSave }) => {
     description: "",
     images: [],
     additional: [
-      "PetsRestriction",
-      "dishwasher",
-       "bathtub",
-      "twoOrMoreBathroom",
-    ],
+      "PetsNotAllowed",
+      ],
   });
   
   // const role = "user"
@@ -385,29 +382,29 @@ const SecondComponent = ({ onSave }) => {
           </label>
           <div className="flex flex-wrap gap-4">
             {[
-              "Liberty Square",
-              "Rustaveli",
-              "Marjanishvili",
-              "Station Square",
-              "Tsereteli",
-              "Gotsiridze",
-              "Nadzaladevi",
-              "Didube",
-              "Grmagele",
-              "Guramishvili",
-              "Sarajishvili",
-              "Akhmeteli Theatre",
-              "State University",
-              "Vazha-Pshavela",
-              "Delisi",
-              "Technical University",
-              "Medical University",
-              "Avlabari",
-              "Isani",
-              "300 Aragveli",
-              "Samgori",
-              "Varketili",
-              "Others",
+             "Liberty Square",
+    "Rustaveli",
+    "Marjanishvili",
+    "Station Square",
+    "Tsereteli",
+    "Gotsiridze",
+    "Nadzaladevi",
+    "Didube",
+    "Grmagele",
+    "Guramishvili",
+    "Sarajishvili",
+    "Akhmeteli Theatre",
+    "State University",
+    "Vazha-Pshavela",
+    "Delisi",
+    "Technical University",
+    "Medical University",
+    "Avlabari",
+    "Isani",
+    "300 Aragveli",
+    "Samgori",
+    "Varketili"
+             
             ].map((option, index) => (
               <div key={index} className="flex items-center gap-2">
                 <input
@@ -484,23 +481,58 @@ const SecondComponent = ({ onSave }) => {
           </label>
           <div className="flex flex-wrap gap-4">
             {[
-              "Varkateli",
-              "Samgori",
-              "Isani",
-              "Avlabari",
-              "Sololaki",
-              "Chugureti",
               "Vera",
-              "Mtatsminda",
-              "Vake",
-              "Saburtalo",
-              "Nadzaladevi",
-              "Sanzona",
-              "Dighomi",
-              " Didi dighomi",
-              "Gldani",
-              "Others",
-            ].map((option, index) => (
+    "Mtatsminda",
+    "Vake",
+    "Sololaki",
+    "Chugureti",
+    "Saburtalo",
+    "Didube",
+    "Gldani",
+    "Avlabari",
+    "Isani",
+    "Samgori",
+    "Dighomi",
+    "Varketili",
+    "Ortachala",
+    "Abanotubani",
+    "DidiDighomi",
+    "Dighomi Massive",
+    "Lisi Lake",
+    "Vashlijvari",
+    "Afrika",
+    "Vasizubani",
+    "Kukia",
+    "Elia",
+    "Okrokana",
+    "Avchala",
+    "Temqa",
+    "Tskhneti",
+    "Bagebi",
+    "Nutsubidze Plato",
+    "Vake-Saburtalo",
+    "Vezisi",
+    "Tkhinvali",
+    "KusTba (Turtle Lake)",
+    "Lisi",
+    "Mukhatgverdi",
+    "Mukhattskaro",
+    "Nutsubidze Plateau",
+    "Lisi Adjacent Area",
+    "Digomi 1-9",
+    "Sof. Digomi (Village Digomi)",
+    "Dighmis Chala",
+    "Koshigora",
+    "Didgori",
+    "Old Tbilisi",
+    "Krtsanisi",
+    "Tsavkisi Valley",
+    "Didube-Chughureti",
+    "Dighmis Massive (Dighmis Masivi)",
+    "Iveri Settlement (Ivertubani)",
+    "Svaneti Quarter (Svanetis Ubani)",
+    "Gldani-Nadzaladevi"
+             ].map((option, index) => (
               <div key={index} className="flex items-center gap-2">
                 <input
                   type="checkbox"
@@ -616,7 +648,7 @@ const SecondComponent = ({ onSave }) => {
             <option value="" disabled>
               Select City
             </option>
-            <option value="Tblisi">Tblisi</option>
+            <option value="Tblisi">Tbilisi</option>
             <option value="Batumi">Batumi</option>
             <option value="Kutaisi">Kutaisi</option>
             <option value="Rustavi">Rustavi</option>
@@ -989,19 +1021,21 @@ const SecondComponent = ({ onSave }) => {
         
           <div className="grid grid-cols-1 gap-4">
   {[
+   "AirConditioner",
     "Oven",
-    "Stove",
-    "Heater",
-    "Elevator",
-    "Balcony",
     "Microwave",
-    "SmartTV",
-    "ParkingPlace",
-    "Projector",
     "VacuumCleaner",
-    "AirConditioner",
+    "Balcony",
+    "Stove",
+    "Dishwasher",
+    "SmartTV",
     "WiFi",
+    "ParkingPlace",
     "PlayStation",
+    "Projector",
+    "Elevator",
+    "Heating",
+    "PET",
   ].map((option) => (
     <div
       key={option}
@@ -1043,7 +1077,7 @@ const SecondComponent = ({ onSave }) => {
               >
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-gray-800 font-medium text-sm">
-                    {item.replace(/([A-Z])/g, " $1").toUpperCase()}
+                    
                   </span>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
