@@ -67,7 +67,7 @@ const SecondComponent = ({ onSave }) => {
  
  
     const email = localStorage.getItem("email")
-    const teleNumber = "999";
+    const teleNumber = localStorage.getItem("teleNumber");
     if (!secondFormData.addressURL) {
       alert("Address URL cannot be empty.");
       return;
