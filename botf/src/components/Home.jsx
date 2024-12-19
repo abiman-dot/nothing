@@ -112,9 +112,21 @@ function Home() {
     }
   };
   
-  const Write = (property) => {
+ const Write = async(property) => {
+    const teleNumber = localStorage.getItem("teleNumber")
     console.log("Property ID:", property.id);
     console.log("Property Details:", property);
+
+    try{
+
+      await axios.post(`https://nothing-server.vercel.app/api/user/addInterest/${property.id}`,{
+        teleNumber
+      })
+    }catch(err){
+      console.log(err)
+    }
+
+
   };
   if (isLoading) return <p className="text-gray-600 text-center">Loading properties...</p>;
   if (error) return <p className="text-red-500 text-center">Error fetching properties.</p>;
