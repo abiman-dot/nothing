@@ -56,6 +56,7 @@ model Residency {
   paymentMethod String?
   parking       Int?
   balcony       Boolean?
+  currency      String?
   bathrooms     Int?
   amenities     String[] @default([])
   heating     String[] @default([])
