@@ -11,12 +11,11 @@ const Profile = () => {
   // const role = "agent";  
    const teleNumber = localStorage.getItem("teleNumber")
   const role = localStorage.getItem("role")
-const name = "Geomap User"
-   const navigate = useNavigate();
+    const navigate = useNavigate();
   const { data, isLoading, error } = UseAll();
   const [filterStatus, setFilterStatus] = useState("published");
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
   const [lastName, setLastName] = useState("");
   const userId = localStorage.getItem("userId");
   const [showUpdateForm, setShowUpdateForm] = useState(false); // Toggle form visibility
@@ -31,8 +30,8 @@ const name = "Geomap User"
         const users = await getAllUsers(); // Fetch all users
         const matchedUser = users.find((user) => user.teleNumber === teleNumber);
         if (matchedUser) {
-          setFirstName(matchedUser.firstName || "");
-          setLastName(matchedUser.lastName || "");
+          setFirstName(matchedUser.username || "");
+          setLastName(matchedUser.surname || "");
           setEmail(matchedUser.email || "");
         }
       } catch (error) {
@@ -143,7 +142,7 @@ const name = "Geomap User"
       {/* User Profile Section */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-center relative">
         <FaUserCircle className="text-blue-500 w-24 h-24 mx-auto" />
-        <p className="mt-4 text-xl font-bold text-gray-700">{firstName || name}</p>
+        <p className="mt-4 text-xl font-bold text-gray-700">{firstName}</p>
         <p className="text-sm text-gray-500">Welcome back! {role} Here is your dashboard.</p>
         <button
           onClick={toggleUpdateForm}
