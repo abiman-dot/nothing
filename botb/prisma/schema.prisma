@@ -42,7 +42,7 @@ model Residency {
   residencyType String?
   city          String?
   price         Int?
-  position      String?
+  position         String?
   deposit       Int?
   discount      Float?
   commission    Float?
@@ -52,6 +52,7 @@ model Residency {
   area          Float?
   type          String?
   addressURL    String?
+  googleaddressurl String?
   paymentMethod String?
   parking       Int?
   balcony       Boolean?
