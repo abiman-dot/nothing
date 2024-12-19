@@ -22,7 +22,7 @@ model User {
   teleNumber String @unique // Ensure teleNumber is unique for relations
   email      String?
   residencies Residency[] @relation("UserResidencies")
-
+  interested  String[]
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   favoriteResidency String[]
