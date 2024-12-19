@@ -5,11 +5,11 @@ import UploadImage from "./UploadImage";
 import UploadVideo from "./UploadVideo";
  import Confetti from "react-confetti"; // Ensure you have this installed
  
-const SecondComponent = () => {
- 
+const SecondComponent = ({ onSave }) => {
+   const [message, setMessage] = useState("");
+  const GOOGLE_API_KEY = "AIzaSyBgM-qPtgGcDc1VqDzDCDAcjQzuieT7Afo";
     const [isConfettiActive, setIsConfettiActive] = useState(false); // State to toggle confetti
-  const [message, setMessage] = useState(""); // State for the success message
-
+ 
   const [secondFormData, setSecondFormData] = useState({
     ...JSON.parse(localStorage.getItem("form1")), // Spread data from form1 directly
     dealType: "Rental",
@@ -20,12 +20,13 @@ const SecondComponent = () => {
     termDuration: "",
     address: JSON.parse(localStorage.getItem("form1"))?.address || "",
     addressURL:"",
+    googleaddressurl:"",
     city: "Batumi",
     term: "Long-term",
     price: null,
     currency: "USD",
     commission: null,
-    deposit: null,
+    deposit: "",
     paymentMethod: "FirstDeposit",
     metro: [],
     district: [],
@@ -33,7 +34,7 @@ const SecondComponent = () => {
     video: "",
     propertyType: "",
     residencyType: "",
-    position:"",
+    pussy:"",
     discount: null,
     area: "",
     type: "",
@@ -53,29 +54,55 @@ const SecondComponent = () => {
   
   // const role = "user"
   const role = localStorage.getItem("role")
-  const handlePublish = async () => {
-    const teleNumber = localStorage.getItem("teleNumber");
-    const email = localStorage.getItem("email")
-    // const teleNumber = "999";
 
+
+
+
+
+
+
+
+  const handlePublish = async () => {
+    console.log(secondFormData.addressURL, "Address URL before saving");
+ 
+ 
+    const email = localStorage.getItem("email")
+    const teleNumber = "999";
+    if (!secondFormData.addressURL) {
+      alert("Address URL cannot be empty.");
+      return;
+    }
      if (Array.isArray(secondFormData.video)) {
       secondFormData.video = secondFormData.video[0] || ""; // Take the first video URL or set as empty string
     }
     try {
-     
-      console.log(secondFormData,"3333333333333333333333333333333333333333")
-       const res = await axios.post(
-        "https://nothing-server.vercel.app/api/residency/create",
-        {
-          teleNumber,
-           secondFormData,
-           email,
-        }
-      );
+      console.log(secondFormData.video,"3333333333333333333333333333333333333333")
+      if(email){
+        const res = await axios.post(
+          "https://nothing-server.vercel.app/api/residency/create",
+          {
+            teleNumber,
+             secondFormData,
+             email,
+          }
+        );
+        console.log("Backend Response:", res);
+
+      } 
+      else{
+        const res = await axios.post(
+          "https://nothing-server.vercel.app/api/residency/create",
+          {
+            teleNumber,
+             secondFormData,
+           }
+        );
+        console.log("Backend Response:", res);
+
+      }
        
        setIsConfettiActive(true);
     setMessage("Successfully created! Waiting for Agent Response...");
-    console.log("Backend Response:", res);
 
     // Scroll to the top
     window.scrollTo({
@@ -85,7 +112,41 @@ const SecondComponent = () => {
 
     // Automatically stop confetti after 5 seconds
     setTimeout(() => setIsConfettiActive(false), 5000);
-      console.log("Backend Response:", res);
+
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        secondFormData.addressURL
+      )}&key=${GOOGLE_API_KEY}`
+    );
+    if (response.data.status === "OK") {
+      const location = response.data.results[0].geometry.location;
+
+      const newMarker = {
+        addressURL: secondFormData.addressURL,
+        lat: location.lat,
+        lng: location.lng,
+      };
+
+    
+
+      // Save to localStorage (simulating a database)
+      const savedMarkers =
+        JSON.parse(localStorage.getItem("markers")) || [];
+      const updatedMarkers = [...savedMarkers, newMarker];
+      localStorage.setItem("markers", JSON.stringify(updatedMarkers));
+
+      setMessage("Address saved successfully!");
+      onSave(updatedMarkers); // Pass updated data to parent component
+     } else {
+      alert("Invalid address! Please try again.");
+    }
+
+
+
+
+
+
+
     } catch (error) {
       console.error("Error sending data to backend:", error);
       throw error;
@@ -139,7 +200,7 @@ const SecondComponent = () => {
         {/* title */}
 
         <div>
-  <label className="block text-sm font-medium">Address</label>
+  <label className="block text-sm font-medium">Address hastag</label>
   <input
     type="text"
     value={secondFormData.address}
@@ -151,17 +212,37 @@ const SecondComponent = () => {
   />
 </div>
 <div>
-  <label className="block text-sm font-medium">Address URL</label>
+  <label className="block text-sm font-medium">Address hastag URL</label>
   <input
     type="url"
-    value={secondFormData.addressURL}
+    value={secondFormData.googleaddressurl}
     onChange={(e) =>
-      setSecondFormData({ ...secondFormData, addressURL: e.target.value })
+      setSecondFormData({ ...secondFormData, googleaddressurl: e.target.value })
     }
     className="w-full p-2 border border-gray-300 rounded-md"
     placeholder="Paste URL here"
   />
 </div>
+
+
+
+ <div>
+          <label className="block text-sm font-medium">Map pin</label>
+          <input
+            type="text"
+            value={secondFormData.addressURL}
+            placeholder="Map Pin"
+            onChange={(e) =>
+              setSecondFormData({ ...secondFormData, addressURL: e.target.value })
+            }
+            className="w-full p-2 border border-gray-300 rounded-md"
+          />
+        </div>
+
+
+
+
+
 
         <div>
           <label className="block text-sm font-medium">Title</label>
@@ -699,13 +780,13 @@ const SecondComponent = () => {
                   <label className="flex items-center">
                     <input
                       type="radio"
-                      name="position"
+                      name="pussy"
                       value="agent"
-                      checked={secondFormData.position === "agent"}
+                      checked={secondFormData.pussy === "agent"}
                       onChange={(e) =>
                         setSecondFormData({
                           ...secondFormData,
-                          position: e.target.value,
+                          pussy: e.target.value,
                         })
                       }
                       className="mr-2"
@@ -715,13 +796,13 @@ const SecondComponent = () => {
                   <label className="flex items-center">
                     <input
                       type="radio"
-                      name="position"
+                      name="pussy"
                       value="owner"
-                      checked={secondFormData.position === "owner"}
+                      checked={secondFormData.pussy === "owner"}
                       onChange={(e) =>
                         setSecondFormData({
                           ...secondFormData,
-                          position: e.target.value,
+                          pussy: e.target.value,
                         })
                       }
                       className="mr-2"
@@ -775,7 +856,7 @@ const SecondComponent = () => {
                   onChange={(e) =>
                     setSecondFormData({
                       ...secondFormData,
-                      deposit: Number(e.target.value),
+                      deposit: e.target.value,
                     })
                   }
                   className="w-full p-2 border border-gray-300 rounded-md"
@@ -1019,6 +1100,8 @@ const SecondComponent = () => {
 SecondComponent.propTypes = {
   localFormData: PropTypes.object.isRequired,
   setStep: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired, // onSave should be a required function
+
   handlePublishToFirstComponent: PropTypes.func.isRequired,
 };
 
