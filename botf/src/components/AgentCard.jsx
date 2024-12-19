@@ -20,9 +20,8 @@ const AgentCard = () => {
    }); // Form fields for rent
   const [editedCard, setEditedCard] = useState(location.state?.property || {});
 
-  const role = "agent";
-  const email = "999";
-
+  const role = localStorage.getItem("role");
+ const email = localStorage.getItem("teleNumber")
   const handleBack = () => {
     navigate(-1);
   };
