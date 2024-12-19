@@ -17,6 +17,8 @@ import AgentCard from "./components/AgentCard";
 import DraftDetails from "./components/DraftDetails";
 import AgentDraftDetails from "./components/AgentDraft";
 import PropertyDetails from "./components/PropertyDetails";
+import DashboardView from "./components/DashboardView";
+
 import "./cloudinaryLoader.js"
 import { LoadScript } from "@react-google-maps/api";
 const App = () => {
@@ -60,6 +62,7 @@ const App = () => {
             <Route path="/analytics" element={<Dashboard />} />
             <Route path="/agents-list" element={<AllAgents />} />
             <Route path="/draft-details/:id" element={<AgentDraftDetails />} />
+                        <Route path="/dashboard-view" element={<DashboardView  />} />
 
             {/* Steps Conditional Rendering */}
             <Route path="/main" element={<FirstComponent />} />
