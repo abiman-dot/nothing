@@ -1,5 +1,5 @@
 import express from "express";
-import {allLikes, createUser, dislikes, getuser, getusers, interest, likes, removeInterest, updateAgent, updateUser} from "../controllers/userCntrl.js";
+import {allLikes, createUser, dislikes, getuser, getusers, interest,rentedbyagent, likes,removeInterest, updateAgent, updateUser} from "../controllers/userCntrl.js";
  
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.put("/updateUser", updateUser);
 router.put("/updateAgent", updateAgent);
 router.post("/addInterest/:id", interest);
 router.delete("/removeInterest/:id", removeInterest);
-router.post("/rentedbyagent/:id", interest);
+router.post("/rentedbyagent/:id", rentedbyagent);
 
 
 
