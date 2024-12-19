@@ -47,7 +47,6 @@ function Home() {
             surname: queryLastName || "aa",
             teleNumber: queryUserId || "",
           });
-
           console.log("User registered successfully:", response.data.message);
           console.log("User registered successfully:", response.data.email);
 
@@ -118,7 +117,7 @@ function Home() {
     console.log("Property Details:", property);
 
     try {
-      const response = await axios.post(`http://localhost:3000/api/user/addInterest/${property.id}`, {
+      const response = await axios.post(`https://nothing-server.vercel.app/api/user/addInterest/${property.id}`, {
         teleNumber,
       });
       console.log('Interest added:', response.data);
