@@ -15,7 +15,7 @@ const AgentCard = () => {
     telephoneNumber: "",
     residency: "",
     codastral: "",
-    startDate:"",
+    startDate:"", 
     endDate:""
    }); // Form fields for rent
   const [editedCard, setEditedCard] = useState(location.state?.property || {});
