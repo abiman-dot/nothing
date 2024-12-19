@@ -183,7 +183,7 @@ console.log("bbbbbbbbbbbbbbbbb")
 
       const message = `
       #${selectedDraft?.city} #${selectedDraft?.district} 🏢#${selectedDraft?.metro}
-📍[${selectedDraft.address}](${selectedDraft.addressURL})
+📍[${selectedDraft.address}](${selectedDraft.googleaddressurl})
         
 #${selectedDraft?.title} Apartment near 
 Apartment for #${selectedDraft?.type}✨ #${selectedDraft?.residencyType}
