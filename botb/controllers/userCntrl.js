@@ -216,7 +216,7 @@ export const updateAgent = asyncHandler(async (req, res) => {
  
 
   try {
-    const updatedProfile = await prisma.residency.update({
+    const updatedProfile = await prisma.user.update({
       where: { teleNumber },
       data: {
         username,
@@ -237,7 +237,7 @@ export const updateUser = asyncHandler(async (req, res) => {
  
 
   try {
-    const updatedProfile = await prisma.residency.update({
+    const updatedProfile = await prisma.user.update({
       where: { teleNumber },
       data: {
         username,
