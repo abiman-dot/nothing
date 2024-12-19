@@ -112,9 +112,23 @@ function Home() {
     }
   };
   
-  const Write = (property) => {
+  const Write = async (property) => {
+    const teleNumber = localStorage.getItem("teleNumber")
     console.log("Property ID:", property.id);
     console.log("Property Details:", property);
+
+    try {
+      const response = await axios.post(`http://localhost:3000/api/user/addInterest/${property.id}`, {
+        teleNumber,
+      });
+      console.log('Interest added:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error adding interest:', error.response?.data || error.message);
+      throw error;
+    }
+
+
   };
   if (isLoading) return <p className="text-gray-600 text-center">Loading properties...</p>;
   if (error) return <p className="text-red-500 text-center">Error fetching properties.</p>;
