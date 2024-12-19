@@ -1034,8 +1034,8 @@ const SecondComponent = ({ onSave }) => {
     "PlayStation",
     "Projector",
     "Elevator",
-    "Heating",
-    "PET",
+    "Heating"
+   
   ].map((option) => (
     <div
       key={option}
@@ -1076,9 +1076,11 @@ const SecondComponent = ({ onSave }) => {
                 className="flex items-center justify-between p-2 border border-gray-300 rounded-md"
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-gray-800 font-medium text-sm">
-                    
-                  </span>
+                 <span className="text-sm font-medium text-gray-800">
+          {item
+            .replace(/([A-Z])/g, " $1") // Add spaces for camelCase
+            .replace(/^\w/, (c) => c.toUpperCase())} {/* Capitalize the first letter */}
+        </span>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
