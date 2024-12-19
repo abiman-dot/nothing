@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma.js";
 
 
 export const createUser = asyncHandler(async (req, res) => {
-  const { username, teleNumber, surname } = req.body;
+  let { username, teleNumber, surname } = req.body;
 
   try {
     // Check if user already exists
@@ -13,60 +13,75 @@ export const createUser = asyncHandler(async (req, res) => {
       where: { teleNumber },
     });
 
-    // If user exists, check for roles and return response
+
+   
+
     if (userExists) {
-      const email = userExists.email || "";
-      
-      if (email.includes("geomap")) {
-        return res.status(200).json({
-          message: "Agent",
-  email:userExists.email,
-         user: userExists,
-        });
-      }
+      if (userExists.email) {
+        const isAgent = userExists.email.includes("geomap");
 
-      if (email.includes("david")) {
-        return res.status(200).json({
-          message: "Admin",
-  email:userExists.email,
-         user: userExists,
-        });
-      }
+       
 
-      // Default response if no role matched
+        if (isAgent) {
+          return res.status(200).json({
+            message: "Agent",
+           email:userExists.email,
+            agent: userExists,
+          });
+        }
+      }
+ if (userExists.email.includes("david")) {
+          return res.status(200).json({
+            message: "Admin",
+           email:userExists.email,
+            admin: userExists,
+          });
+        }
       return res.status(200).json({
         message: "Logged in successfully",
-        role: "User",
         user: userExists,
       });
     }
 
-    // If user does not exist, create a new user
+   
+
+    // If user doesn't exist, create a new user
     const newUser = await prisma.user.create({
       data: {
-        username,
-        surname,
-        teleNumber
-       },
+        username: username,
+        surname: surname,
+        teleNumber: teleNumber,
+      },
     });
 
-  
+    // Check for admin logic
+    if (teleNumber.includes("david")) {
+      return res.status(201).json({
+        message: "Admin",
+        admin: newUser,
+      });
+    }
 
-    // Default response for a new standard user
+    // Check for agent logic
+    const isAgent = teleNumber.includes("geomap");
+    if (isAgent) {
+      return res.status(201).json({
+        message: "Agent",
+        agent: newUser,
+      });
+    }
+
+    // Default response for new user
     return res.status(201).json({
       message: "User registered successfully",
-      role: "User",
       user: newUser,
     });
+
   } catch (err) {
-    console.error("Error creating user:", err.message);
-    return res.status(500).json({
-      message: "An error occurred while creating the user",
-      error: err.message,
-    });
+    console.error(err);
+    res.status(500).json({ message: "An error occurred" });
   }
 });
-
 
 
  
@@ -76,7 +91,7 @@ export const likes = asyncHandler(async (req, res) => {
 
   try {
     const alreadyLiked = await prisma.user.findUnique({
-      where: { teleNumber: email },
+      where: { email: email },
       select: { favoriteResidency: true },
     });
 
@@ -89,7 +104,7 @@ export const likes = asyncHandler(async (req, res) => {
     }
 
     await prisma.user.update({
-      where: { teleNumber: email },
+      where: { email: email },
       data: {
         favoriteResidency: { push: id },
       },
@@ -109,7 +124,7 @@ export const dislikes = asyncHandler(async (req, res) => {
 
   try {
     const user = await prisma.user.findUnique({
-      where: { teleNumber: email },
+      where: { email: email },
       select: { favoriteResidency: true },
     });
 
@@ -127,7 +142,7 @@ export const dislikes = asyncHandler(async (req, res) => {
     );
 
     await prisma.user.update({
-      where: { teleNumber: email },
+      where: { email: email },
       data: { favoriteResidency: updatedFavorites },
     });
 
@@ -142,7 +157,7 @@ export const allLikes = asyncHandler(async (req, res) => {
   const { email } = req.body;
   try {
     const likes = await prisma.user.findUnique({
-      where: { teleNumber: email },
+      where: { email: email },
       select: { favoriteResidency: true },
     });
     res.status(200).json(likes.favoriteResidency);
@@ -196,6 +211,130 @@ export const updateUserEmail = async ( req,res) => {
   }
 };
 
+export const updateAgent = asyncHandler(async (req, res) => {
+  const { teleNumber, username, surname, email } = req.body; 
+ 
+
+  try {
+    const updatedProfile = await prisma.residency.update({
+      where: { teleNumber },
+      data: {
+        username,
+        surname,
+        email
+      },
+    });
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", updatedProfile });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+export const updateUser = asyncHandler(async (req, res) => {
+  const { teleNumber, username, surname } = req.body; 
+ 
+
+  try {
+    const updatedProfile = await prisma.residency.update({
+      where: { teleNumber },
+      data: {
+        username,
+        surname
+      },
+    });
+    res
+      .status(200)
+      .json({ message: "Profile updated successfully", updatedProfile });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+export const interest = asyncHandler(async (req, res) => {
+  const { teleNumber } = req.body;
+  const { id } = req.params;
+  try {
+    const alreadyInterested = await prisma.user.findUnique({
+      where: { teleNumber: teleNumber },
+      select: { interested: true },
+    });
 
 
-  
+    if (!alreadyInterested) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+
+    if (alreadyInterested.interested.some((interest) => interest.id === id)) {
+      return res.status(400).json({ message: "Already liked" });
+    }
+    await prisma.user.update({
+      where: { teleNumber: teleNumber },
+      data: {
+        interested: { push: id },
+      },
+    });
+
+    res.json({ message: "interest updated successfully"});
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to interest" });
+  }
+});
+export const removeInterest = asyncHandler(async (req, res) => {
+  const { teleNumber } = req.body;
+  const { id } = req.params;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { teleNumber: teleNumber },
+      select: { interested: true },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!user.interested.includes(id)) {
+      return res.status(400).json({ message: "Removed interest" });
+    }
+    const updatedInterest = user.interested.filter((id) => id !== id);
+    
+
+    await prisma.user.update({
+      where: { teleNumber: teleNumber },
+      data: { interested: updatedInterest },
+    });
+
+    res.json({ message: "removed Interest successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to remove interest" });
+  }
+});
+
+
+export const rentedbyagent = asyncHandler(async (req, res) => {
+  let {id, username,residency, teleNumber, codastral, startDate, endDate } = req.body;
+  try {
+    const newCustomer = await prisma.customer.create({
+      data: {
+        id,
+        residency,
+        username,
+        telephoneNumber : teleNumber,
+        codastral,
+        startDate,
+        endDate
+      },
+    });
+
+    console.log('Customer created:', newCustomer);
+  } catch (error) {
+    console.error('Error creating customer:', error);
+  }
+});
