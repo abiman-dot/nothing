@@ -17,8 +17,11 @@ import AgentCard from "./components/AgentCard";
 import DraftDetails from "./components/DraftDetails";
 import AgentDraftDetails from "./components/AgentDraft";
 import PropertyDetails from "./components/PropertyDetails";
-
+import "./cloudinaryLoader.js"
+import { LoadScript } from "@react-google-maps/api";
 const App = () => {
+   const GOOGLE_MAPS_API_KEY = "AIzaSyBgM-qPtgGcDc1VqDzDCDAcjQzuieT7Afo";
+
   const queryClient = new QueryClient();
   const role = localStorage.getItem("role");
 
@@ -27,6 +30,8 @@ const App = () => {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <div className="app-container">
+                 <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
+
           <Routes>
             {/* Public Pages */}
             <Route path="/" element={<Home />} />
@@ -66,6 +71,8 @@ const App = () => {
 
           {/* Navbar is always displayed */}
           <Navbar />
+                          </LoadScript>
+
         </div>
       </QueryClientProvider>
     </BrowserRouter>
