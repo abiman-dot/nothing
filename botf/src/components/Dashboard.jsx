@@ -74,7 +74,7 @@ function Dashboard() {
     try {
       const properties = await getAllProperties();
       const userProperties = properties.filter(
-        (property) => property.teleNumber === teleNumber
+        (property) => property.email === teleNumber
       );
 
       const propertyStatuses = userProperties.reduce((acc, property) => {
