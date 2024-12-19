@@ -209,7 +209,7 @@ ${selectedDraft.parking === 0 ? "❌ Parking" : ""}
                 : ""
             }
 💳 #${selectedDraft?.paymentMethod}   
-💰 ${selectedDraft.price}${selectedDraft.currency == "USD" ? "$" : "₾"} | Deposit ${selectedDraft.price}${selectedDraft.currency == "USD" ? "$" : "₾"}
+💰 ${selectedDraft.price}${selectedDraft.currency == "USD" ? "$" : "₾"} | Deposit ${selectedDraft.deposit}${selectedDraft.currency == "USD" ? "$" : "₾"}
   0% Commission
   ${selectedDraft.price >= 0 && selectedDraft.price <= 300
           ? "#Price0to300"
