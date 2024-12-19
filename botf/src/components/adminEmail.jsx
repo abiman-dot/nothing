@@ -1,14 +1,12 @@
 import PropTypes from "prop-types";
-import useProperties from "../hooks/useProperties";
-import { useNavigate } from "react-router-dom";
+ import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 
 const AdminEmail = () => {
   
    const email = localStorage.getItem("email");
   const name = localStorage.getItem("firstName");
-  const { data, isLoading, error } = useProperties();
-  const navigate = useNavigate();
+   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.clear();  
@@ -85,60 +83,14 @@ const AdminEmail = () => {
           >
             All Agents List
           </button>
+            <button
+      onClick={() => navigate("/dashboard-view")}
+      className="bg-teal-500 text-white px-4 py-2 rounded-lg shadow hover:bg-teal-600 transition"
+    >
+      Dashboard
+    </button>
         </div>
-      </div>
-
-      {/* Dashboard Section */}
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-        <h2 className="text-xl font-bold text-gray-700 mb-4 border-b pb-2 border-gray-200">
-          Dashboard
-        </h2>
-        {isLoading ? (
-          <p className="text-gray-600 text-center">Loading dashboard data...</p>
-        ) : error ? (
-          <p className="text-red-500 text-center">Error fetching dashboard data.</p>
-        ) : data?.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4">
-            {data.map((property) => (
-              <div
-              onClick={() => navigate(`/property/${property.id}`, { state: { property } })}
-              key={property.id}
-                className="flex p-4 bg-gray-50 border border-gray-200 rounded-md shadow hover:shadow-lg transition transform hover:scale-105 cursor-pointer"
-              >
-                {/* Left: Image */}
-                <div className="w-1/3 flex items-center justify-center">
-                  <img
-                    src={
-                      property.images?.[0] ||
-                      "https://via.placeholder.com/100x100?text=No+Image"
-                    }
-                    alt="Property"
-                    className="w-24 h-24 object-cover rounded-md border border-gray-300"
-                  />
-                </div>
-
-                {/* Right: Details */}
-                <div className="w-2/3 pl-4">
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {property.title || "Untitled Property"}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-1">
-                    <span className="font-medium">Price:</span> {property.price || "N/A"}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    <span className="font-medium">Type:</span> {property.type || "N/A"}
-                  </p>
-                  <p className="text-sm text-gray-500 mt-1">
-                    <span className="font-medium">Published:</span>{" "}
-                    {new Date(property.updatedAt).toLocaleDateString("en-GB")}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500 text-center">No data available for the dashboard.</p>
-        )}
+      
       </div>
     </div>
   );
