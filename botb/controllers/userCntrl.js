@@ -20,7 +20,7 @@ export const createUser = asyncHandler(async (req, res) => {
       if (userExists.email) {
         const isAgent = userExists.email.includes("geomap");
 
-       
+        
 
         if (isAgent) {
           return res.status(200).json({
