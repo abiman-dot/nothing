@@ -4,7 +4,7 @@ import {allLikes, createUser, dislikes, getuser, getusers, interest,rentedbyagen
 const router = express.Router();
 
 
-
+router.put("/updateuser", updateUserEmail);
 
 router.post("/register", createUser );
 router.post("/likes/:id", likes);
