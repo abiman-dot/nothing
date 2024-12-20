@@ -106,7 +106,7 @@ const Profile = () => {
     e.preventDefault();
     if (email) {
       try {
-        await axios.put("https://nothing-server.vercel.app/api/user/updateuser", {
+        await axios.post("https://nothing-server.vercel.app/api/user/register", {
           email,
           teleNumber,
         });
