@@ -102,20 +102,24 @@ const Profile = () => {
   };
 
   // Handle email form submission
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit =async (e) => {
     e.preventDefault();
     if (email) {
-      try {
-        await axios.post("https://nothing-server.vercel.app/api/user/register", {
-          email,
-          teleNumber,
-        });
-        localStorage.setItem("teleEmail", email);
-        alert("Logged in successfully");
-        window.location.reload();
-      } catch (err) {
-        console.log(err);
+      try{
+ 
+        await axios.put("https://nothing-server.vercel.app/api/user/updateuser",{
+           email,
+           userId
+           
+        })
+
+      }catch(err){
+console.log(err)
       }
+      localStorage.setItem("teleEmail", email);
+      alert("Logged in successfully");
+      window.location.reload();
+
     }
   };
 
