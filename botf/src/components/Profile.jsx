@@ -7,7 +7,7 @@ import axios from "axios";
 import { getAllUsers } from "../utils/api";
  
 const Profile = () => {
-  // const teleNumber = "999";
+  // const teleNumber = "999"; 
   // const role = "agent";  
    const teleNumber = localStorage.getItem("teleNumber")
   const role = localStorage.getItem("role")
