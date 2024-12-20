@@ -24,29 +24,47 @@ const Profile = () => {
   const toggleUpdateForm = () => {
     setShowUpdateForm((prev) => !prev);
   };
+
+    
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    const fetchUsers = async () => {
       try {
         const users = await getAllUsers(); // Fetch all users
-        const matchedUser = users.find((user) => user.teleNumber === teleNumber);
-        if (matchedUser) {
-          setFirstName(matchedUser.username || "");
-          setLastName(matchedUser.surname || "");
-          setEmail(matchedUser.email || "");
-            localStorage.setItem("firstName",matchedUser.username)
-          localStorage.setItem("lastName",matchedUser.surname)
-          localStorage.setItem("email",matchedUser.email)
+        console.log("Fetched Users: ", JSON.stringify(users, null, 2)); // Log users in a readable format
+  
+        // Get teleNumber from localStorage
+         const teleNumber = localStorage.getItem("teleNumber");
+  
+        if (!teleNumber) {
+          console.log("No teleNumber found in localStorage.");
+          return;
         }
-       
+  
+        // Check if teleNumber matches
+        const matchedUser = users.find((user) => user.teleNumber === teleNumber);
+  
+        if (matchedUser) {
+          // Print the username, surname, and email
+          console.log("Matched User:", {
+            username: matchedUser.username,
+            surname: matchedUser.surname,
+            email: matchedUser.email,
+          });
+  
+          // Set state for UI display
+          setFirstName(matchedUser.username || ""); // Fallback to empty string if username is undefined
+          setLastName(matchedUser.surname || ""); // Fallback to empty string if surname is undefined
+          setEmail(matchedUser.email || ""); // Fallback to empty string if email is undefined
+        } else {
+          console.log("No matching user found for the given teleNumber.");
+        }
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching users:", error); // Log any errors
       }
     };
-
-    if (teleNumber) {
-      fetchUserDetails();
-    }
-  }, [teleNumber]);
+  
+    fetchUsers();
+  }, []);  
 
   // Handle profile updates
   const handleProfileUpdate = async () => {
@@ -146,7 +164,7 @@ const Profile = () => {
       {/* User Profile Section */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-center relative">
         <FaUserCircle className="text-blue-500 w-24 h-24 mx-auto" />
-        <p className="mt-4 text-xl font-bold text-gray-700">{firstName}</p>
+        <p className="mt-4 text-xl font-bold text-gray-700">{firstName}{lastName}</p>
         <p className="text-sm text-gray-500">Welcome back! {role} Here is your dashboard.</p>
         <button
           onClick={toggleUpdateForm}
